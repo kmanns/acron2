@@ -27,15 +27,11 @@ export default function decorate(block) {
     const picture = row.querySelector('picture');
     const heading = row.querySelector('h1, h2, h3, h4');
     const linksInRow = [...row.querySelectorAll('a')];
-    const textEl = row.querySelector('p, div');
 
+    // Check for the most specific content type first so a wrapping <div>
+    // around a heading or picture is never mistaken for plain text.
     if (picture && !pictureEl) {
       pictureEl = picture;
-      return;
-    }
-
-    if (linksInRow.length && !ctaEl) {
-      ctaEl = linksInRow;
       return;
     }
 
@@ -44,6 +40,14 @@ export default function decorate(block) {
       return;
     }
 
+    if (linksInRow.length && !ctaEl) {
+      ctaEl = linksInRow;
+      return;
+    }
+
+    // Plain text row (supertitle or copy) - authored as a <p> or a bare
+    // text node inside a <div>, with no picture/heading/link present.
+    const textEl = row.querySelector('div > div') || row.querySelector('div');
     if (textEl && textEl.textContent.trim()) {
       if (!superTitleEl) {
         superTitleEl = textEl;
