@@ -262,6 +262,55 @@
           }
         },
         {
+          "title": "Hero Acron",
+          "id": "hero-acron",
+          "model": "hero-acron",
+          "plugins": {
+            "da": {
+              "rows": 5,
+              "columns": 1,
+              "fields": [
+                {
+                  "name": "image",
+                  "selector": "div:nth-of-type(1)>div>picture>img[src]"
+                },
+                {
+                  "name": "alt",
+                  "selector": "div:nth-of-type(1)>div>picture>img[alt]"
+                },
+                {
+                  "name": "superTitle",
+                  "selector": "div:nth-of-type(2)>div>p"
+                },
+                {
+                  "name": "heading",
+                  "selector": "div:nth-of-type(3)>div>h1"
+                },
+                {
+                  "name": "copy",
+                  "selector": "div:nth-of-type(4)>div>p"
+                },
+                {
+                  "name": "primaryCtaText",
+                  "selector": "div:nth-of-type(5)>div>p:nth-of-type(1)>a"
+                },
+                {
+                  "name": "primaryCtaLink",
+                  "selector": "div:nth-of-type(5)>div>p:nth-of-type(1)>a[href]"
+                },
+                {
+                  "name": "secondaryCtaText",
+                  "selector": "div:nth-of-type(5)>div>p:nth-of-type(2)>a"
+                },
+                {
+                  "name": "secondaryCtaLink",
+                  "selector": "div:nth-of-type(5)>div>p:nth-of-type(2)>a[href]"
+                }
+              ]
+            }
+          }
+        },
+        {
           "title": "Targeted Block",
           "id": "targeted-block",
           "model": "targeted-block",

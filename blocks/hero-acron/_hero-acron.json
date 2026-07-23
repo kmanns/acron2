@@ -1,0 +1,97 @@
+{
+  "definitions": [
+    {
+      "title": "Hero Acron",
+      "id": "hero-acron",
+      "model": "hero-acron",
+      "plugins": {
+        "da": {
+          "rows": 5,
+          "columns": 1,
+          "fields": [
+            { "name": "image", "selector": "div:nth-of-type(1)>div>picture>img[src]" },
+            { "name": "alt", "selector": "div:nth-of-type(1)>div>picture>img[alt]" },
+            { "name": "superTitle", "selector": "div:nth-of-type(2)>div>p" },
+            { "name": "heading", "selector": "div:nth-of-type(3)>div>h1" },
+            { "name": "copy", "selector": "div:nth-of-type(4)>div>p" },
+            { "name": "primaryCtaText", "selector": "div:nth-of-type(5)>div>p:nth-of-type(1)>a" },
+            { "name": "primaryCtaLink", "selector": "div:nth-of-type(5)>div>p:nth-of-type(1)>a[href]" },
+            { "name": "secondaryCtaText", "selector": "div:nth-of-type(5)>div>p:nth-of-type(2)>a" },
+            { "name": "secondaryCtaLink", "selector": "div:nth-of-type(5)>div>p:nth-of-type(2)>a[href]" }
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "hero-acron",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Background image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "alt",
+          "label": "Image alt text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "superTitle",
+          "label": "Supertitle",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "heading",
+          "label": "Heading",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "copy",
+          "label": "Copy",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "primaryCtaText",
+          "label": "Primary button text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "primaryCtaLink",
+          "label": "Primary button link",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "secondaryCtaText",
+          "label": "Secondary button text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "secondaryCtaLink",
+          "label": "Secondary button link",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

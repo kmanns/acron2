@@ -857,3 +857,80 @@ body:has(.seller-assisted-buying-banner) {
   }
 }
 
+
+/* ============================================================
+   Acron Aviation brand overrides (migrated from acronaviation.com)
+   ============================================================ */
+
+header .nav-wrapper {
+  background-color: var(--acron-yoke-400);
+  border-bottom: none;
+}
+
+header nav,
+header nav a,
+header nav p,
+header nav button {
+  color: var(--acron-cloud);
+}
+
+header nav .nav-hamburger button {
+  background-color: transparent;
+  color: var(--acron-cloud);
+}
+
+header nav .nav-brand a {
+  font-family: var(--type-base-font-family);
+}
+
+header nav .nav-brand img {
+  width: 140px;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+header nav .nav-sections ul > li,
+header nav .nav-sections ul > li > a {
+  color: var(--acron-cloud);
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li a:hover,
+header nav .nav-sections .default-content-wrapper > ul > li:hover {
+  color: var(--acron-pitch-400);
+}
+
+@media (min-width: 900px) {
+  header nav .nav-sections .default-content-wrapper > ul > li:hover,
+  header nav .nav-sections .nav-drop[aria-expanded='true'] {
+    background-color: var(--acron-yoke-300);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] .submenu-wrapper {
+    background-color: var(--acron-cloud);
+    color: var(--acron-yoke-500);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] .submenu-wrapper a {
+    color: var(--acron-yoke-500);
+  }
+}
+
+header nav .nav-tools button {
+  color: var(--acron-cloud);
+}
+
+header nav .nav-tools button.nav-cart-button,
+header nav .nav-tools button.nav-wishlist-button,
+header nav .nav-tools button.nav-search-button {
+  filter: brightness(0) invert(1);
+}
+
+header nav .nav-tools button.nav-cart-button[data-count]::after {
+  background-color: var(--acron-pitch-400);
+  color: var(--acron-yoke-500);
+}
+
+/* mobile expanded menu keeps the dark brand background */
+header nav[aria-expanded='true'] {
+  background-color: var(--acron-yoke-400);
+}

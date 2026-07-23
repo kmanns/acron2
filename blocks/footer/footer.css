@@ -1,5 +1,6 @@
 footer {
-    background-color: var(--color-neutral-100);
+    background-color: var(--acron-yoke-400);
+    color: var(--acron-cloud);
     font: var(--type-body-2-default-font);
     letter-spacing: var(--type-body-2-default-letter-spacing);
 }
@@ -12,6 +13,63 @@ footer .footer > div {
 
 footer .footer p {
     margin: 0;
+}
+
+footer .footer a {
+    color: var(--acron-cloud);
+    font: var(--type-body-2-default-font);
+    letter-spacing: var(--type-body-2-default-letter-spacing);
+}
+
+footer .footer a:hover {
+    color: var(--acron-pitch-400);
+    text-decoration: underline;
+}
+
+footer .footer strong {
+    color: var(--acron-pitch-400);
+    font: var(--type-body-1-strong-font);
+    letter-spacing: var(--type-body-1-strong-letter-spacing);
+}
+
+footer .footer ul {
+    list-style: none;
+    padding-left: 0;
+    margin: var(--spacing-small) 0 0;
+}
+
+footer .footer li {
+    margin-bottom: var(--spacing-xsmall);
+}
+
+footer .footer > div > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xbig);
+}
+
+footer .footer > div > div:first-of-type {
+    border-bottom: 1px solid var(--acron-yoke-300);
+    padding-bottom: var(--spacing-big);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-big);
+}
+
+footer .footer > div > div:last-of-type p {
+    color: var(--acron-thrust-200);
+    font: var(--type-details-caption-1-font);
+    letter-spacing: var(--type-details-caption-1-letter-spacing);
+}
+
+footer .footer > div > div:last-of-type a {
+    color: var(--acron-thrust-200);
+    font: var(--type-details-caption-1-font);
+    letter-spacing: var(--type-details-caption-1-letter-spacing);
+}
+
+footer .footer > div > div:last-of-type a:hover {
+    color: var(--acron-pitch-400);
 }
 
 .storeview-switcher-button {
@@ -66,8 +124,12 @@ footer .footer p {
     margin-bottom: var(--spacing-small);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 600px) {
     footer .footer > div {
         padding: 40px 32px 24px;
+    }
+
+    footer .footer > div > div:first-of-type {
+        grid-template-columns: repeat(4, 1fr);
     }
 }

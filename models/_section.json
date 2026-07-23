@@ -129,6 +129,7 @@
       "id": "section",
       "components": [
         "hero",
+        "hero-acron",
         "accordion",
         "cards",
         "carousel",

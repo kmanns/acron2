@@ -12,11 +12,35 @@
 
 /* stylelint-disable no-empty-source */
 :root, .dropin-design {
-  /* Adobe Commerce Dropin design tokens */
-  --color-brand-300: #6d6d6d;
-  --color-brand-500: #454545;
-  --color-brand-600: #383838;
-  --color-brand-700: #2b2b2b;
+  /* Acron Aviation brand palette (migrated from acronaviation.com) */
+  --acron-yoke-500: #002b31;
+  --acron-yoke-400: #00363d;
+  --acron-yoke-300: #335e64;
+  --acron-yoke-200: #99afb1;
+  --acron-yoke-100: #ccd7d8;
+  --acron-yoke-50: #f0f3f4;
+  --acron-thrust-500: #014c4b;
+  --acron-thrust-400: #015f5e;
+  --acron-thrust-300: #347f7e;
+  --acron-thrust-200: #99bfbf;
+  --acron-thrust-100: #ccdfdf;
+  --acron-thrust-50: #e6efef;
+  --acron-pitch-500: #02b871;
+  --acron-pitch-400: #02e68d;
+  --acron-pitch-300: #35eba4;
+  --acron-pitch-200: #9af5d1;
+  --acron-pitch-100: #ccfae8;
+  --acron-climb: #ccf0f2;
+  --acron-cloud: #ffffff;
+  --acron-utility-info: #02cbe6;
+  --acron-utility-warning: #e2cc57;
+  --acron-utility-error: #c64c4c;
+
+  /* Adobe Commerce Dropin design tokens - remapped to Acron Aviation brand */
+  --color-brand-300: var(--acron-thrust-200);
+  --color-brand-500: var(--acron-thrust-400);
+  --color-brand-600: var(--acron-yoke-400);
+  --color-brand-700: var(--acron-yoke-500);
   --color-neutral-50: #fff;
   --color-neutral-100: #fafafa;
   --color-neutral-200: #f5f5f5;
@@ -39,13 +63,15 @@
   --color-alert-200: #ffebeb;
   --color-alert-500: #db7070;
   --color-alert-800: #c35050;
-  --color-button-active: var(--color-brand-700);
-  --color-button-focus: var(--color-neutral-400);
-  --color-button-hover: var(--color-brand-600);
+  --color-button-active: var(--acron-yoke-500);
+  --color-button-focus: var(--acron-thrust-200);
+  --color-button-hover: var(--acron-yoke-400);
   --color-action-button-active: var(--color-neutral-50);
   --color-action-button-hover: var(--color-neutral-300);
   --color-opacity-16: rgb(255 255 255 / 16%);
   --color-opacity-24: rgb(255 255 255 / 24%);
+  --color-link: var(--acron-pitch-500);
+  --color-link-hover: var(--acron-thrust-400);
   --grid-1-columns: 4;
   --grid-1-margins: 0;
   --grid-1-gutters: 16px;
@@ -88,7 +114,7 @@
   --spacing-huge: 120px;
   --spacing-xhuge: 144px;
   --spacing-xxhuge: 192px;
-  --type-base-font-family: adobe-clean, roboto, roboto-fallback, system-ui, sans-serif;
+  --type-base-font-family: "Figtree", adobe-clean, roboto, roboto-fallback, system-ui, sans-serif;
   --type-display-1-font: normal normal 300 6rem/7.2rem var(--type-base-font-family);
   --type-display-1-letter-spacing: 0.04em;
   --type-display-2-font: normal normal 300 4.8rem/5.6rem var(--type-base-font-family);
@@ -126,8 +152,12 @@
 
   /* Additional tokens */
   --type-fixed-font-family: adobe-clean, "Roboto Mono", menlo, consolas, "Liberation Mono", monospace, system-ui, sans-serif;
-  --background-color: var(--color-neutral-50);
-  --nav-height: 6.4rem;
+  --background-color: var(--acron-cloud);
+  --light-color: var(--acron-yoke-50);
+  --dark-color: var(--acron-yoke-500);
+  --link-color: var(--acron-pitch-500);
+  --link-hover-color: var(--acron-thrust-400);
+  --nav-height: 8.8rem;
 }
 
 /* fallback font */
@@ -135,6 +165,15 @@
   font-family: adobe-clean;
   size-adjust: 100%;
   src: local("Helvetica");
+}
+
+/* Acron Aviation brand typeface (Figtree, loaded from Google Fonts) */
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/figtree/v11/_Xm2-HY6qgHWDvCzWMbFyMcqDIbEnCM.woff2") format("woff2");
 }
 
 html, body {
@@ -301,20 +340,21 @@ button.button {
   max-width: 100%;
   margin: 0;
   border: var(--shape-border-width-3) solid transparent;
-  border-radius: var(--shape-border-radius-3);
-  padding: 0.5em 1.2em;
+  border-radius: 999px;
+  padding: 0.7em 1.6em;
   font: var(--type-button-2-font);
   letter-spacing: var(--type-button-2-letter-spacing);
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.25;
   text-decoration: none;
-  background-color: var(--color-brand-500);
-  color: var(--color-neutral-50);
+  background-color: var(--acron-pitch-400);
+  color: var(--acron-yoke-500);
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 a.button[aria-disabled="true"],
@@ -327,7 +367,7 @@ main a.button:hover,
 main a.button:focus,
 button.button:hover,
 button.button:focus {
-  background-color: var(--color-brand-600);
+  background-color: var(--acron-pitch-300);
   cursor: pointer;
 }
 
@@ -340,17 +380,17 @@ button.button:disabled:hover {
 
 a.button.primary,
 button.button.primary {
-  border-color: var(--color-brand-500);
-  background-color: var(--color-brand-500);
-  color: var(--color-neutral-50);
+  border-color: var(--acron-pitch-400);
+  background-color: var(--acron-pitch-400);
+  color: var(--acron-yoke-500);
 }
 
 a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--color-brand-600);
-  background-color: var(--color-brand-600);
+  border-color: var(--acron-pitch-300);
+  background-color: var(--acron-pitch-300);
 }
 
 a.button.primary[aria-disabled="true"],
@@ -368,14 +408,27 @@ main a.button.secondary,
 button.button.secondary {
   background-color: unset;
   border: var(--shape-border-width-3) solid currentcolor;
-  color: var(--color-brand-500);
+  color: var(--acron-yoke-400);
 }
 
 main a.button.secondary:hover,
 main a.button.secondary:focus-visible,
 button.button.secondary:hover,
 button.button.secondary:focus-visible {
-  color: var(--color-brand-600);
+  color: var(--acron-thrust-400);
+  border-color: var(--acron-thrust-400);
+}
+
+/* secondary buttons placed on dark backgrounds (e.g. hero) invert to light outline */
+.hero main a.button.secondary,
+.hero-container a.button.secondary {
+  color: var(--acron-cloud);
+}
+
+.hero main a.button.secondary:hover,
+.hero-container a.button.secondary:hover {
+  color: var(--acron-pitch-300);
+  border-color: var(--acron-pitch-300);
 }
 
 
@@ -483,9 +536,25 @@ main > .section:first-of-type {
 /* section metadata - styles - start */
 main .section.light,
 main .section.highlight {
-  background-color: var(--color-neutral-100);
+  background-color: var(--acron-yoke-50);
   margin: 0;
   padding: var(--spacing-xbig) 0;
+}
+
+main .section.dark {
+  background-color: var(--acron-yoke-400);
+  color: var(--acron-cloud);
+  margin: 0;
+  padding: var(--spacing-xbig) 0;
+}
+
+main .section.dark h1,
+main .section.dark h2,
+main .section.dark h3,
+main .section.dark h4,
+main .section.dark h5,
+main .section.dark h6 {
+  color: var(--acron-cloud);
 }
 
 main .section[data-padding="default"] {

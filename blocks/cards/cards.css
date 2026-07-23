@@ -12,12 +12,35 @@
 }
 
 .cards > ul > li {
-  border: var(--shape-border-width-1) solid var(--color-neutral-500);
+  border: var(--shape-border-width-1) solid var(--acron-yoke-100);
+  border-radius: var(--shape-border-radius-2);
   background-color: var(--background-color);
+  overflow: hidden;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.cards > ul > li:hover {
+  border-color: var(--acron-pitch-400);
+  box-shadow: var(--shape-shadow-2);
+  transform: translateY(-4px);
 }
 
 .cards .cards-card-body {
-  margin: var(--spacing-small);
+  margin: var(--spacing-medium);
+}
+
+.cards .cards-card-body p:first-of-type strong {
+  color: var(--acron-yoke-500);
+  font: var(--type-headline-2-strong-font);
+  letter-spacing: var(--type-headline-2-strong-letter-spacing);
+}
+
+.cards .cards-card-body a:not(.button) {
+  color: var(--acron-thrust-400);
+}
+
+.cards .cards-card-body a:not(.button):hover {
+  color: var(--acron-pitch-500);
 }
 
 .cards .cards-card-image {
