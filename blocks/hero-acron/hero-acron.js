@@ -2,33 +2,54 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 /**
  * Hero block modeled after the acronaviation.com "HeroStandard" component.
- * Authored content (in order, each on its own row inside the block):
+ * Authored content: up to five rows, each containing exactly one column with
+ * one type of content, in this order:
  *   1. Background image (picture)
- *   2. Supertitle (short line above the heading) - optional, wrapped in <p><em>...</em></p> or plain <p>
+ *   2. Supertitle (short line above the heading)
  *   3. Heading (h1/h2/h3)
- *   4. Copy paragraph - optional
- *   5. Buttons paragraph - optional, first link = primary, second link = secondary
+ *   4. Copy paragraph
+ *   5. Buttons - a paragraph with one or two links (first = primary, second = secondary)
+ *
+ * Rows are optional except the heading; detection is based on the content
+ * found in each row rather than a fixed row index, so authors can omit a
+ * row (e.g. no supertitle) without breaking the block.
  */
 export default function decorate(block) {
   const rows = [...block.children];
-  const picture = block.querySelector('picture');
-  const heading = block.querySelector('h1, h2, h3');
-  const links = [...block.querySelectorAll('a')];
 
-  // Identify supertitle: the first <p> row (not containing the heading, image, or links)
-  // that appears before the heading.
+  let pictureEl = null;
   let superTitleEl = null;
+  let headingEl = null;
   let copyEl = null;
+  let ctaEl = null;
 
   rows.forEach((row) => {
-    const p = row.querySelector(':scope > div > p, :scope > p');
-    if (!p) return;
-    if (p.querySelector('picture') || p.querySelector('a')) return;
-    if (heading && row.contains(heading)) return;
-    if (!superTitleEl && (!heading || row.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING)) {
-      superTitleEl = p;
-    } else if (superTitleEl && !copyEl) {
-      copyEl = p;
+    const picture = row.querySelector('picture');
+    const heading = row.querySelector('h1, h2, h3, h4');
+    const linksInRow = [...row.querySelectorAll('a')];
+    const textEl = row.querySelector('p, div');
+
+    if (picture && !pictureEl) {
+      pictureEl = picture;
+      return;
+    }
+
+    if (linksInRow.length && !ctaEl) {
+      ctaEl = linksInRow;
+      return;
+    }
+
+    if (heading && !headingEl) {
+      headingEl = heading;
+      return;
+    }
+
+    if (textEl && textEl.textContent.trim()) {
+      if (!superTitleEl) {
+        superTitleEl = textEl;
+      } else if (!copyEl) {
+        copyEl = textEl;
+      }
     }
   });
 
@@ -42,9 +63,9 @@ export default function decorate(block) {
     content.append(superTitle);
   }
 
-  if (heading) {
-    heading.classList.add('hero-acron-heading');
-    content.append(heading);
+  if (headingEl) {
+    headingEl.classList.add('hero-acron-heading');
+    content.append(headingEl);
   }
 
   if (copyEl) {
@@ -54,10 +75,10 @@ export default function decorate(block) {
     content.append(copy);
   }
 
-  if (links.length) {
+  if (ctaEl && ctaEl.length) {
     const cta = document.createElement('div');
     cta.className = 'hero-acron-cta';
-    links.forEach((link, i) => {
+    ctaEl.forEach((link, i) => {
       link.classList.add('button');
       link.classList.add(i === 0 ? 'primary' : 'secondary');
       cta.append(link);
@@ -67,12 +88,14 @@ export default function decorate(block) {
 
   const imageWrapper = document.createElement('div');
   imageWrapper.className = 'hero-acron-image';
-  if (picture) {
-    const img = picture.querySelector('img');
+  if (pictureEl) {
+    const img = pictureEl.querySelector('img');
     if (img) {
-      const src = img.getAttribute('src') || img.src;
+      const src = img.getAttribute('src');
       const alt = img.getAttribute('alt') || '';
-      imageWrapper.append(createOptimizedPicture(src, alt, true, [{ width: '2000' }, { width: '1200' }, { width: '750' }]));
+      imageWrapper.append(
+        createOptimizedPicture(src, alt, true, [{ width: '2000' }, { width: '1200' }, { width: '750' }]),
+      );
     }
   }
 
