@@ -557,6 +557,14 @@ main .section.dark h6 {
   color: var(--acron-cloud);
 }
 
+main .section.dark a:not(.button) {
+  color: var(--acron-pitch-400);
+}
+
+main .section.dark a:not(.button):hover {
+  color: var(--acron-pitch-300);
+}
+
 main .section[data-padding="default"] {
     padding: var(--spacing-xxsmall) 0;
 }
