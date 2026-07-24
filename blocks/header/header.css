@@ -42,15 +42,26 @@ header nav[aria-expanded='true'] {
     position: relative;
   }
 
-  header nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
-  }
-
+  /* Stack tools / brand / sections as their own full-width rows (borrowed
+     from the takara reference nav) instead of one flex row with
+     justify-content: space-between. The single-row flex layout let the
+     nav label list's intrinsic (nowrap) width exceed the space left over
+     after the brand and tools columns, pushing text past the right edge
+     of the bar. Stacking removes that width contention entirely: each
+     row gets the full nav width to itself. */
+  header nav,
   header nav[aria-expanded='true'] {
+    display: grid;
+    grid-template:
+      'tools' auto
+      'brand' auto
+      'sections' auto
+      / 1fr;
+    align-items: stretch;
+    gap: 0;
+    max-width: 100%;
+    padding: 0;
+    height: auto;
     min-height: 0;
     overflow: visible;
   }
@@ -168,6 +179,18 @@ header nav .nav-brand img {
   height: auto;
 }
 
+@media (min-width: 900px) {
+  header nav .nav-brand {
+    grid-area: brand;
+    padding: 14px 32px 10px;
+    max-width: 1264px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+  }
+}
+
 /* sections */
 header nav .nav-sections {
   grid-area: sections;
@@ -213,9 +236,18 @@ header nav .nav-sections ul>li:empty {
 
 @media (min-width: 900px) {
   header nav .nav-sections {
+    grid-area: sections;
     display: block;
     visibility: visible;
     white-space: nowrap;
+  }
+
+  header nav .nav-sections .default-content-wrapper {
+    width: 100%;
+    max-width: 1264px;
+    margin: 0 auto;
+    padding: 0 32px;
+    box-sizing: border-box;
   }
 
   header nav[aria-expanded='true'] .nav-sections {
@@ -240,6 +272,19 @@ header nav .nav-sections ul>li:empty {
     display: flex;
     gap: 24px;
     margin: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Every dropdown item becomes the positioning context for its own
+     panel (borrowed from the takara reference nav's structure), so a
+     panel anchors under its own label instead of the nearest positioned
+     ancestor further up the tree — previously that was header
+     .nav-wrapper, which spans the full page width, so the "Account"
+     panel stretched edge-to-edge across the whole bar instead of
+     appearing under "Account" itself. */
+  header nav .nav-sections .default-content-wrapper>ul>li {
+    position: relative;
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li ul {
@@ -257,16 +302,31 @@ header nav .nav-sections ul>li:empty {
     flex: 0 1 auto;
   }
 
+  /* Panel sizes to its own content and sits directly under the label
+     (top: 100% of the now-relative <li>) instead of stretching to
+     width: 100% of the whole nav bar. */
   header nav .nav-sections .default-content-wrapper>ul>li[aria-expanded='true'] .submenu-wrapper {
     background-color: var(--color-neutral-50);
     box-sizing: border-box;
     left: 0;
-    max-height: var(--desktop-panel-max-height);
-    min-height: var(--desktop-panel-min-height);
+    max-height: none;
+    min-height: 0;
     padding: var(--spacing-xbig);
     position: absolute;
-    top: var(--spacing-large);
-    width: 100%;
+    top: 100%;
+    width: max-content;
+    min-width: 220px;
+    max-width: 320px;
+    z-index: 100;
+  }
+
+  /* Keep the last couple of items' panels from running off the right
+     edge of the viewport — anchor those from the right side of the
+     label instead of the left. */
+  header nav .nav-sections .default-content-wrapper>ul>li:last-child[aria-expanded='true'] .submenu-wrapper,
+  header nav .nav-sections .default-content-wrapper>ul>li:nth-last-child(2)[aria-expanded='true'] .submenu-wrapper {
+    left: auto;
+    right: 0;
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li .submenu-header {
@@ -281,9 +341,12 @@ header nav .nav-sections ul>li:empty {
 
   header nav .nav-sections .default-content-wrapper>ul>li[aria-expanded='true'] ul {
     display: flex;
-    margin: 0 auto;
-    overflow-x: auto;
-    width: var(--desktop-large-panel-width);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 4px;
+    margin: 0;
+    overflow: visible;
+    width: 100%;
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li ul::before {
@@ -299,8 +362,8 @@ header nav .nav-sections ul>li:empty {
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li ul>li {
-    min-width: var(--desktop-item-panel-min-width);
-    max-width: var(--desktop-item-panel-max-width);
+    min-width: 0;
+    max-width: none;
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li:hover,
@@ -334,6 +397,18 @@ header nav .nav-tools {
   align-items: center;
   background: var(--background-color);
   z-index: 3;
+}
+
+@media (min-width: 900px) {
+  header nav .nav-tools {
+    justify-content: flex-end;
+    max-width: 1264px;
+    margin: 0 auto;
+    padding: 8px 32px 0;
+    width: 100%;
+    box-sizing: border-box;
+    height: auto;
+  }
 }
 
 header nav .nav-tools-wrapper>button {
@@ -933,4 +1008,33 @@ header nav .nav-tools button.nav-cart-button[data-count]::after {
 /* mobile expanded menu keeps the dark brand background */
 header nav[aria-expanded='true'] {
   background-color: var(--acron-yoke-400);
+}
+
+/* Boilerplate sets the tools tray background to --background-color
+   (white); on the brand-navy nav that painted an unstyled white patch
+   over the bar. Match the bar's own background so the tray blends in. */
+header nav .nav-tools,
+header nav[aria-expanded='true'] .nav-tools {
+  background: var(--acron-yoke-400);
+}
+
+/* Commerce drop-in icons: the account/login icon is injected inline by
+   the auth drop-in with a hardcoded black stroke (see
+   renderAuthDropdown.js, which now uses currentColor instead), which was
+   invisible against the dark brand nav background. Force it to render
+   in the nav's light foreground color like the other icon buttons. */
+header nav .nav-tools button.nav-dropdown-button {
+  color: var(--acron-cloud);
+}
+
+header nav .nav-tools button.nav-dropdown-button svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+header nav .nav-tools button.nav-dropdown-button svg,
+header nav .nav-tools button.nav-dropdown-button svg * {
+  stroke: currentcolor !important;
+  fill: none !important;
 }
